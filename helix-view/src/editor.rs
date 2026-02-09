@@ -363,6 +363,7 @@ pub struct Config {
     pub continue_comments: bool,
     /// Whether to display infoboxes. Defaults to true.
     pub auto_info: bool,
+    pub default_directory_opener: DefaultDirOpener,
     pub file_picker: FilePickerConfig,
     pub file_explorer: FileExplorerConfig,
     /// Configuration of the statusline elements
@@ -1067,6 +1068,13 @@ pub enum PopupBorderConfig {
     Menu,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum DefaultDirOpener {
+    FilePicker,
+    FileExplorer,
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(default, rename_all = "kebab-case", deny_unknown_fields)]
 pub struct WordCompletion {
@@ -1111,6 +1119,7 @@ impl Default for Config {
             preview_completion_insert: true,
             completion_trigger_len: 2,
             auto_info: true,
+            default_directory_opener: DefaultDirOpener::FilePicker,
             file_picker: FilePickerConfig::default(),
             file_explorer: FileExplorerConfig::default(),
             statusline: StatusLineConfig::default(),
